@@ -44,9 +44,8 @@ function addMessage(var1, var2, var3, var4){
     LastName: var2,
     Age: var3,
     FaveSuperhero: var4
-  }
-  
+  };
+
   var newPostKey = firebase.database().ref().child('stream').push().key;
   firebase.database().ref('/stream/' + newPostKey).set(postData);
-
 }
