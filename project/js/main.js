@@ -33,7 +33,7 @@ function handleMessageFormSubmit(){
   var Age = $("#Age").val();
   var FaveSuperhero = $("#SuperHero").val();
   var body = FirstName + " " + LastName + " " + Age + " " + FaveSuperhero;
-  console.log(body);
+  // console.log(body);
   addMessage(FirstName, LastName, Age, FaveSuperhero);
 }
 
@@ -45,12 +45,23 @@ function addMessage(var1, var2, var3, var4){
     Age: var3,
     FaveSuperhero: var4
   };
-
-  console.log("Testing");
-
   var newPostKey = firebase.database().ref().child('stream').push().key;
   firebase.database().ref('/stream/' + newPostKey).set(postData);
 
-
-  console.log("Testing");
 }
+
+window.onload = function() {
+  const databaseStreamReference = firebase.database().ref('/stream/');
+
+  databaseStreamReference.on('value', function(snapshot) {
+    var messages = snapshot.val();
+    $('#stream').empty();
+
+    if (messages) {
+      Object.keys(messages).forEach(function (key) {
+        const message = messages[key];
+        $('#stream').append(`<div> My name is ${message.FirstName} ${message.LastName} and my favourite Superhero is ${message.FaveSuperhero}</div>`);
+      });
+    }
+  });
+};
