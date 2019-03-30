@@ -46,6 +46,11 @@ function addMessage(var1, var2, var3, var4){
     FaveSuperhero: var4
   };
 
+  console.log("Testing");
+
   var newPostKey = firebase.database().ref().child('stream').push().key;
   firebase.database().ref('/stream/' + newPostKey).set(postData);
+
+
+  console.log("Testing");
 }
